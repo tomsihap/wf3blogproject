@@ -26,6 +26,10 @@
                         <a href="{{ path('article_show', { 'article' : article.id }) }}">
                             <i class="fa fa-search"></i>
                         </a>
+
+                        <a href="{{ path('article_edit', { 'article' : article.id }) }}">
+                            <i class="fa fa-pencil"></i>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

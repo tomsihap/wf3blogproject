@@ -1,18 +1,30 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+<a href="{{ path('article_index')}}">
+    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> retour à la liste
+</a>
 
-<form action="{{ path('article_new') }}" method="post">
+
+ {% if article is defined %}
+    <form action="{{ path('article_update', { 'article': article.id }) }}" method="post">
+{% else %}
+    <form action="{{ path('article_new') }}" method="post">
+{% endif %}
     <div class="form-group">
         <label for="formTitle">Titre de l'article</label>
-        <input type="text" class="form-control" id="formTitle" name="title">
+        <input type="text" class="form-control" id="formTitle" name="title" value="{{ article.title | default("") }}">
     </div>
     <div class="form-group">
         <label for="formContent">Contenu de l'article</label>
-        <textarea id="formContent" class="form-control" name="content"></textarea>
+        <textarea id="formContent" class="form-control" name="content">{{ article.content | default("") }}</textarea>
     </div>
 
-    <button class="btn btn-primary">Créer l'article</button>
+    {% if article is defined %}
+        <button class="btn btn-warning">Éditer l'article</button>
+    {% else %}
+        <button class="btn btn-primary">Créer l'article</button>
+    {% endif %}
 </form>
 
 {% endblock %}

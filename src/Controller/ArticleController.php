@@ -72,6 +72,30 @@ class ArticleController extends AbstractController {
         return $this->redirectToRoute("article_index");
 
     }
+
+    /**
+     * @Route("/{article}/edit", name="article_edit", methods={"GET"})
+     */
+    public function edit(Article $article) {
+        return $this->render('article/create.html.twig', [
+            "article" => $article
+        ]);
+    }
+
+    /**
+     * @Route("/{article}/edit", name="article_update", methods={"POST"})
+     */
+    public function update(Request $request, Article $article) {
+
+        $article->setTitle($request->request->get('title'));
+        $article->setContent($request->request->get('content'));
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->flush();
+
+        return $this->redirectToRoute("article_index");
+
+    }
     
     /**
      * @Route("/{article}", name="article_show", methods={"GET"})
