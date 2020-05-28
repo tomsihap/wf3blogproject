@@ -5,26 +5,9 @@
     <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> retour à la liste
 </a>
 
-
- {% if article is defined %}
-    <form action="{{ path('article_update', { 'article': article.id }) }}" method="post">
-{% else %}
-    <form action="{{ path('article_new') }}" method="post">
-{% endif %}
-    <div class="form-group">
-        <label for="formTitle">Titre de l'article</label>
-        <input type="text" class="form-control" id="formTitle" name="title" value="{{ article.title | default("") }}">
-    </div>
-    <div class="form-group">
-        <label for="formContent">Contenu de l'article</label>
-        <textarea id="formContent" class="form-control" name="content">{{ article.content | default("") }}</textarea>
-    </div>
-
-    {% if article is defined %}
-        <button class="btn btn-warning">Éditer l'article</button>
-    {% else %}
-        <button class="btn btn-primary">Créer l'article</button>
-    {% endif %}
-</form>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">Créer l'article</button>
+{{ form_end(form) }}
 
 {% endblock %}

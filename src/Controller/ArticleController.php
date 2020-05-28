@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,28 +49,27 @@ class ArticleController extends AbstractController {
     }
 
 
-
     /**
-     * @Route("/create", name="article_create", methods={"GET"})
+     * @Route("/create", name="article_create", methods={"GET", "POST"})
      */
-    public function create() {
-        return $this->render('article/create.html.twig');
-    }
+    public function create(Request $request) {
 
-    /**
-     * @Route("/", name="article_new", methods={"POST"})
-     */
-    public function new(Request $request) {
+        $article = new Article; // L'objet qui contiendra les données du formulaire généré
+        $form = $this->createForm(ArticleType::class, $article); // Le formulaire généré
+        $form->handleRequest($request); // Le formulaire gèrera les données de requête si jamais il en reçoit
 
-        $article = new Article;
-        $article->setTitle($request->request->get('title'));
-        $article->setContent($request->request->get('content'));
+        if($form->isSubmitted() && $form->isValid()) {
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($article);
-        $manager->flush();
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($article);
+            $manager->flush();
 
-        return $this->redirectToRoute("article_index");
+            return $this->redirectToRoute('article_index');
+        }
+
+        return $this->render('article/create.html.twig', [
+            'form' => $form->createView()
+        ]);
 
     }
 
