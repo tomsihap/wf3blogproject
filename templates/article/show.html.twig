@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<a href="{{ path('article_index')}}">
+    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> retour à la liste
+</a>
+
+<div class="card">
+    <div class="card-header">
+        #{{article.id}} - {{article.title}} (créé le {{article.createdAt|date('d/m/Y', 'Europe/Paris')}} à {{article.createdAt|date('H:i', 'Europe/Paris')}})
+    </div>
+    <div class="card-body">
+        {{article.content}}
+    </div>
+</div>
+
+{% endblock %}

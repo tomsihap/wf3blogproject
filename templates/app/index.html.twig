@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma page d'accueil{% endblock %}
+
+{% block body %}
+    <h1>Voici les trois derniers articles publiés :</h1>
+
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Titre</th>
+                <th>Résumé</th>
+                <th>Date de création</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.id }}</td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.shortContent }}</td>
+                    <td>{{ article.createdAt | date("d/m/Y H:i", "Europe/Paris") }}</td>
+                    <td>
+                        <a href="{{ path('article_show', { 'article' : article.id }) }}">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+{% endblock %}
