@@ -26,11 +26,11 @@
                         <i class="fa fa-search"></i>
                     </a>
 
-                    <a href="{{ path('article_edit', { 'article' : article.id }) }}">
+                    <a href="{{ path('article_update', { 'article' : article.id }) }}">
                         <i class="fa fa-pencil"></i>
                     </a>
 
-                    <form action="{{ path('article_delete', { 'article' : article.id }) }}" method="post">
+                    <form onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')" action="{{ path('article_delete', { 'article' : article.id }) }}" method="post">
                         <button class="btn btn-outline-danger btn-sm"><i class="fa fa-trash"></i></button>
                     </form>
                 </td>

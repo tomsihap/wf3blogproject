@@ -74,36 +74,31 @@ class ArticleController extends AbstractController {
     }
 
     /**
-     * @Route("/{article}/edit", name="article_edit", methods={"GET"})
-     */
-    public function edit(Article $article) {
-        return $this->render('article/create.html.twig', [
-            "article" => $article
-        ]);
-    }
-
-    /**
-     * @Route("/{article}/edit", name="article_update", methods={"POST"})
+     * @Route("/{article}/edit", name="article_update", methods={"GET", "POST"})
      */
     public function update(Request $request, Article $article) {
 
-        $article->setTitle($request->request->get('title'));
-        $article->setContent($request->request->get('content'));
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->flush();
 
-        return $this->redirectToRoute("article_index");
+            return $this->redirectToRoute('article_index');
+        }
 
+        return $this->render('article/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
 
     /**
      * @Route("/{article}/delete", name="article_delete", methods={"POST"})
      */
-    public function delete(Request $request, Article $article)
+    public function delete(Article $article)
     {
-
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($article);
         $manager->flush();
