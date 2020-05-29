@@ -8,6 +8,8 @@
 
 <div class="card">
     <div class="card-header">
+        <span class="badge badge-success">{{ article.category.title }}</span>
+
         #{{article.id}} - {{article.title}} (créé le {{article.createdAt|date('d/m/Y', 'Europe/Paris')}} à {{article.createdAt|date('H:i', 'Europe/Paris')}})
     </div>
     <div class="card-body">
