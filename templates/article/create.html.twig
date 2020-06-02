@@ -6,7 +6,24 @@
 </a>
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    <div class="row">
+    
+        <div class="col-6">
+            {{ form_row(form.title) }}
+            
+            {{ form_row(form.content, {
+                'label': 'Contenu de l\'article',
+                'value': 'Contenu par defaut depuis Twig pour un textarea',
+                'attr': {
+                        'class': 'form-control-sm0-8'
+                    }
+                })
+            }}
+            {{form_row(form)}} 
+        </div>
+    </div>
+
     <button class="btn btn-primary">Créer l'article</button>
 {{ form_end(form) }}
 
